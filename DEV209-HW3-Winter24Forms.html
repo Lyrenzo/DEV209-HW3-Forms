@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    fieldset {
+      margin-bottom: 20px;
+    }
+
+    fieldset[disabled] {
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+<form name="mainForm" onsubmit="return false">
+
+  <!-- First Section -->
+  <fieldset id="section1">
+    <legend>Choose User Type</legend>
+    <button onclick="showNewUserSection()">Click for New User</button>
+    <button onclick="showExistingUserSection()">Click for Existing User</button>
+  </fieldset>
+
+  <!-- Second Section -->
+  <fieldset id="section2" disabled=true>
+    <legend>New User Section</legend>
+    <label for="newUsername">Username:</label>
+    <input type="text" id="newUsername" required>
+    <label for="newPassword">Password:</label>
+    <input type="password" id="newPassword" required>
+    <label for="newCity">City:</label>
+    <input type="text" id="newCity" required>
+    <label for="newState">State:</label>
+    <input type="text" id="newState" required>
+    <button onclick="submitNewUserForm()">Login</button>
+  </fieldset>
+
+  <!-- Third Section -->
+  <fieldset id="section3" disabled=true>
+    <legend>Existing User Section</legend>
+    <label for="existingUsername">Username:</label>
+    <input type="text" id="existingUsername" required>
+    <label for="existingPassword">Password:</label>
+    <input type="password" id="existingPassword" required>
+    <button onclick="submitExistingUserForm()">Login</button>
+  </fieldset>
+
+</form>
+
+<script>
+  function showNewUserSection() {
+    document.getElementById('section1').disabled = true;
+    document.getElementById('section2').disabled = false;
+  }
+
+  function showExistingUserSection() {
+    document.getElementById('section1').disabled = true;
+    document.getElementById('section3').disabled = false;
+  }
+
+  function submitNewUserForm() {
+    var username = document.getElementById('newUsername').value;
+    var password = document.getElementById('newPassword').value;
+    var city = document.getElementById('newCity').value;
+    var state = document.getElementById('newState').value;
+
+    localStorage.setItem('username', username);
+    localStorage.setItem('password', password);
+    localStorage.setItem('city', city);
+    localStorage.setItem('state', state);
+
+    alert('Welcome ' + username);
+  }
+
+  function submitExistingUserForm() {
+    var enteredUsername = document.getElementById('existingUsername').value;
+    var enteredPassword = document.getElementById('existingPassword').value;
+
+    var storedUsername = localStorage.getItem('username');
+    var storedPassword = localStorage.getItem('password');
+
+    if (enteredUsername === storedUsername && enteredPassword === storedPassword) {
+      alert('Welcome back ' + enteredUsername);
+    } else {
+      alert('Invalid');
+    }
+  }
+</script>
+
+</body>
+</html>
